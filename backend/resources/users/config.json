@@ -8,6 +8,14 @@
 			"required": false,
 			"id": "trackers",
 			"order": 0
+		},
+		"image": {
+			"name": "image",
+			"type": "string",
+			"typeLabel": "string",
+			"required": false,
+			"id": "image",
+			"order": 1
 		}
 	}
 }
