@@ -18,5 +18,7 @@ server.listen( port, host, function( err ){
 	// opn( url )
 })
 
+let a = 'b'
+
 var api = require('./server')
 var email = require('./backend')

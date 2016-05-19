@@ -1,5 +1,5 @@
 import BaseElement from '../Base/base'
-import getTemplate from './flash.jade'
+import getHTML from './flash.jade'
 import uuid from 'uuid'
  
 class FlashClass extends BaseElement {
@@ -21,14 +21,14 @@ class FlashClass extends BaseElement {
             evt.stopPropagation()
         }
 
-        let time = this.getFromTemplate('duration')
+        let time = this.getAttribute('duration')
         setTimeout(() => this.fadeAndRemove(), ( time || FlashClass.default_duration ) )
     }
 
     render( data ){
         let tpl_vars = { body: this.innerHTML }
 
-        this.template = this.buildTemplate( tpl_vars )
+        this.template = this.getHTML( tpl_vars )
 
         this.innerHTML = this.template
     }
@@ -53,8 +53,8 @@ class FlashClass extends BaseElement {
         })
     }
 
-    getTemplate( vars ){
-        return getTemplate( vars )
+    getHTML( vars ){
+        return getHTML( vars )
     }
 }
 var pfx = ["webkit", "moz", "MS", "o", ""];

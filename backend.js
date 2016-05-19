@@ -24,22 +24,16 @@ app.get('', function( req, res ){
 	res.send('hello')
 })
 
-app.get('/', function( req, res ){
-	res.send('/hello')
-})
-
 app.get('/test', function( req, res ){
 	res.send({
 		test: true,
 		test_quality: 'ok',
-		endpoint: 'backend'
+		endpoint: 'backend',
+		pid: process.pid
 	})
 })
 
 
-app.get('/pid', function( req, res ){
-	res.send( process.pid )
-})
 
 
 /**

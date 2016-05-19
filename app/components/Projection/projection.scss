@@ -1,0 +1,13 @@
+x-projection {
+	display: inline-block;
+	background: #000;
+	color: #fff;
+	padding: 1em;
+
+	span {
+		padding: 0 0.5em;
+	}
+	span:nth-child(1):after {
+		content: ':';
+	}
+}

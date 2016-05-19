@@ -8,13 +8,15 @@ var express = require('express'),
 	pjson = require('./package.json'),
 	AWS = require('aws-sdk'),
 	DOC = require("dynamodb-doc"),
+	expressJWT = require("express-jwt"),
+	JWT = require("jsonwebtoken"),
 	request = require('request'),
 	fs = require('fs'),
 	__port = 8080,
-	print = function( x ){
+	print = x => {
 		return JSON.stringify( x, null, 4 )
 	},
-	readModuleFile = function( path, callback ){
+	readModuleFile = ( path, callback ) => {
 	    try {
 	        var filename = require.resolve( path );
 	        fs.readFile( filename, 'utf8', callback );
@@ -27,6 +29,7 @@ var app = express()
 
 app.set('port', process.env.PORT || __port )
 app.use( cors() )
+// app.use( expressJWT({ secret: 't87cgt4it76i47tyeuryfkdugfkuyreuydfgjh'}).unless({ path: ['/test']}) )
 
 app.use('', ( req, res, next ) => { // To handle nginx routing config
 	var remove_path = pjson.config.serverBasePath

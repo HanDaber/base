@@ -41,19 +41,53 @@ import RemoteItemClass from './components/Remote/remote'
 window.RemoteItem = document.registerElement('remote-item', RemoteItemClass )
 
 import FlashClass from './components/Flash/flash'
-window.Flash = document.registerElement('x-flash', FlashClass )
+window.Flash = document.registerElement('u-flash', FlashClass )
+
+import BaseElement from './components/Base/base'
+window.Base = document.registerElement('x-base', BaseElement )
+
+import ProjectionElement from './components/Projection/projection'
+window.Projection = document.registerElement('x-projection', ProjectionElement )
+window.p = document.createElement('x-projection')
+
+import KeyValElement from './components/KeyVal/keyval'
+window.KeyVal = document.registerElement('key-val', KeyValElement )
 
 
-import getTemplate from './ui.jade'
-let ui_template = getTemplate({ name: 'wat the feq'})
 
-// shim for safari:
-if (typeof HTMLElement !== 'function'){
-    var _HTMLElement = function(){};
-    _HTMLElement.prototype = HTMLElement.prototype;
-    HTMLElement = _HTMLElement;
-}
-class CustomDate extends HTMLElement {
+
+
+
+
+
+
+
+
+// let SassCompiler = ( SuperClass ) => class extends SuperClass {
+// 	createdCallback(){
+// 		console.log('who me?')
+// 		this.templateStyle = ''
+// 	}
+
+// 	compileStyle( scss ){
+// 		sass.compile( scss, result => { console.log( result.text ); this.templateStyle = result.text })
+// 	}
+// }
+
+// class ProjectionElement extends SassCompiler( BaseElement ){
+// 	static scss = '$someVar: 123px; .some-selector { width: $someVar; }'
+
+// 	createdCallback(){
+// 		console.log('cool wdwd')
+// 		this.compileStyle( ProjectionElement.scss )
+// 	}
+// }
+
+
+
+
+
+class CustomDate extends BaseElement {
 	static elements = []
 
 	static tick(){
@@ -103,7 +137,6 @@ class CustomDate extends HTMLElement {
 			min = date.getMinutes(),
 			sec = date.getSeconds()
 		this.textContent = "Today's date: " + date.toJSON().slice(0,10)+' '+( hour > 12 ? hour - 12 : hour )+':'+min+':'+sec
-		// this.appendChild( $( ui_template )[ 0 ] )
 	}
 
 	set [ CustomDate.attribute ]( val ){
@@ -127,7 +160,6 @@ class CustomDate extends HTMLElement {
 }
 CustomDate.tick()
 var DateElem = document.registerElement('date-elem', CustomDate )
-// $('#app').append('<date-elem class="wat"></date-elem>')
 window.DateElem = DateElem
 
 // var $templates = $('template')
@@ -165,45 +197,23 @@ window.DateElem = DateElem
 // }
 // window.resources = resources
 
-// var binds = $templates.map( recursivelyShit )
-// window.binds = binds
 
-function recursivelyShit(){
-	var $this = $( $( this ).html() ),
-		$binds = []
-console.dir( $this )
-	$this.children().each( fjaarten )
+// function getResourceStringFromTemplate( $tpl ){
+// 	var $buh = $( $tpl ).filter(function(){
+// 	    return $( this ).attr('resource')
+// 	}).first()
 
-	function fjaarten(){
-		let $this = $( this )
-		if( $this.attr('data-bind') ){ extrackten( this ) }
-		else { $this.children().each( fjaarten ) }
-	}
+// 	return $buh.attr('resource')
+// }
 
-	function extrackten( it ){
-		let $this = $( it )
-		$binds.push({ element: $this, key: $this.attr('data-bind') })
-	}
-  
-	return $binds
-}
+// function getIdFromTemplate( $tpl ){
 
-function getResourceStringFromTemplate( $tpl ){
-	var $buh = $( $tpl ).filter(function(){
-	    return $( this ).attr('resource')
-	}).first()
+//   var $html = $( $( $tpl ).html() )
 
-	return $buh.attr('resource')
-}
+//   var $buh = $html.filter(function(){
+//     return $( this ).attr('resource-id')
+//   }).first()
 
-function getIdFromTemplate( $tpl ){
-
-  var $html = $( $( $tpl ).html() )
-
-  var $buh = $html.filter(function(){
-    return $( this ).attr('resource-id')
-  }).first()
-
-  return $buh.attr('resource-id') || ''
-}
+//   return $buh.attr('resource-id') || ''
+// }
 

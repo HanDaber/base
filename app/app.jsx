@@ -1,14 +1,17 @@
-/*! @preserve dh process.env.APP_HASH */
+/*! 
+	@preserve dh process.env.APP_HASH 
+	MAIN UI ENTRY
+*/
 import './index.html'
 import './favicon.ico'
 import 'normalize.css/normalize.css'
 import './scss/app.scss'
 
 // ==================== BUILD ====================
-import FlashClass from './components/Flash/flash'
-if( ! FlashClass.isRegistered('u-flash') ){
-	window.Flash = document.registerElement('u-flash', FlashClass )
-}
+// import FlashClass from './components/Flash/flash'
+// if( ! FlashClass.isRegistered('u-flash') ){
+// 	window.Flash = document.registerElement('u-flash', FlashClass )
+// }
 
 {
 	// function fetchStylesheet(){
@@ -193,4 +196,4 @@ if( ! FlashClass.isRegistered('u-flash') ){
 
 
 // ==================== PROTO ====================
-// import sandbox from './sandbox'
+import sandbox from './sandbox'

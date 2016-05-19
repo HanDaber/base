@@ -1,0 +1,7 @@
+key-val {
+	display: block;
+	padding: 0.5em;
+
+	.key { background: #333; color: #aaa; width: 50%; float: left; }
+	.val { background: #aaa; color: #333; width: 50%; float: left; }
+}

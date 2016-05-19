@@ -5,7 +5,7 @@ import jQuery from 'jquery'
 
 let $ = jQuery
 
-import getTemplate from './remote.jade'
+import getHTML from './remote.jade'
 
 let prettyJSON = data => JSON.stringify( data, null, 4 )
 
@@ -53,7 +53,7 @@ class RemoteItemClass extends BaseElement {
 				evt.stopPropagation()
 			} else if( action ) {
 				let flash = document.createDocumentFragment(),
-					err = document.createElement('x-flash')
+					err = document.createElement('u-flash')
 				err.setAttribute('duration', 10*1000 )
 				err.setAttribute('warning', true )
 				err.innerHTML = 'NOT IMPLEMENTED'
@@ -111,7 +111,7 @@ class RemoteItemClass extends BaseElement {
 						this.render( data )
 					} else {
 						let flash = document.createDocumentFragment(),
-							err = document.createElement('x-flash')
+							err = document.createElement('u-flash')
 						err.setAttribute('duration', 10*1000 )
 						err.setAttribute('error', true )
 						err.innerHTML = prettyJSON( data )
@@ -164,8 +164,8 @@ class RemoteItemClass extends BaseElement {
 	}
 
 	buildTemplate( tpl_vars ){
-		let getTemplate = ( typeof this.getTemplate == 'function' ? this.getTemplate : RemoteItemClass.getTemplate )
-		let tpl = getTemplate( tpl_vars ),
+		let getHTML = ( typeof this.getHTML == 'function' ? this.getHTML : RemoteItemClass.getHTML )
+		let tpl = getHTML( tpl_vars ),
 			$tpl = $( tpl )
 
 		var allowed_actions = this.getActionsFromTemplate()
@@ -179,8 +179,8 @@ class RemoteItemClass extends BaseElement {
 		return $tpl
 	}
 
-	getTemplate( vars ){
-		return getTemplate( vars )
+	getHTML( vars ){
+		return getHTML( vars )
 	}
 }
 

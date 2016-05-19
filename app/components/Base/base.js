@@ -1,65 +1,76 @@
 import 'document-register-element'
-import getTemplate from './base.jade'
-import './base.scss'
+import getHTML from './base.jade'
+import style from '!raw!sass!./base.scss'
 
 // shim for safari:
-if( typeof HTMLElement !== 'function'){
-    var _HTMLElement = function(){}
-    _HTMLElement.prototype = HTMLElement.prototype
-    HTMLElement = _HTMLElement
+if( typeof HTMLDivElement !== 'function'){
+    var _HTMLDivElement = function(){}
+    _HTMLDivElement.prototype = HTMLDivElement.prototype
+    HTMLDivElement = _HTMLDivElement
 }
 
-class BaseElement extends HTMLElement {
+class BaseElement extends HTMLDivElement {
 
-	static getTemplate = getTemplate
-
-	static isRegistered = name => document.createElement( name ).constructor !== HTMLElement // check if this element is registered with the document
+	static isRegistered = name => document.createElement( name ).constructor !== HTMLDivElement // check if this element is registered with the document
 
 	constructor(){ super() }
 	// Fires when an instance of the element is created.
-	createdCallback(){}
+	createdCallback(){
+		let tpl_vars = { html: this.innerHTML, css: this.getCSS() }
+		
+		this.baseHTML = this.getHTML( tpl_vars )
+	}
     // Fires when an instance was inserted into the document.
-    attachedCallback(){ this.render() }
+    attachedCallback(){ 
+    	this.render() 
+	}
     // Fires when an instance was removed from the document.
     detachedCallback(){}
     // Fires when an attribute was added, removed, or updated.
-    attributeChangedCallback( attr, oldVal, newVal ){}
-
-    render(){
-		let tpl_vars = { body: this.innerHTML }
-
-		this.template = this.buildTemplate( tpl_vars )
-
-		this.innerHTML = this.template
-    }
-
-	getFromTemplate( attribute ){ // <div aatribute="value"...
-		let elems = document.querySelectorAll('['+attribute+']'),
-			value = false
-
-		for( var i = 0, l = elems.length; i < l; i++ ){
-			if( value !== false ) break;
-
-			let this_elem = elems[ i ],
-				these_attrs = this_elem.attributes
-			
-			for( var j = 0, m = these_attrs.length; j < m; j++ ){
-				let this_attr = these_attrs[ j ]
-			
-				if( this_attr.name === attribute ){
-					value = this_attr.value
-					break;
-				}
-			}
-		}
-
-		return value
+    attributeChangedCallback( attr, oldVal, newVal ){ 
+    	this.render() 
 	}
 
-	buildTemplate( tpl_vars ){
-		let getTemplate = ( typeof this.getTemplate == 'function' ? this.getTemplate : BaseElement.getTemplate )
+    render(){
+		let wrapper = this.baseDOM
 
-		return getTemplate( tpl_vars )
+		this.innerHTML = ''
+
+		if( typeof this.willRender === 'function') this.willRender( wrapper )
+
+		this.appendChild( wrapper )
+
+		if( typeof this.didRender === 'function') this.didRender( wrapper )
+    }
+
+	getBaseDOM( html ){
+		let wrapper = document.createDocumentFragment(),
+			div = document.createElement('div')
+
+		div.innerHTML = html
+
+		let ch = div.childNodes
+
+		Array.from( ch ).forEach( node => {
+			if( node ) wrapper.appendChild( node )
+		})
+
+		return wrapper
+	}
+
+	set baseDOM( val ){
+		return false
+	}
+	get baseDOM(){
+		return this.getBaseDOM( this.baseHTML )
+	}
+
+	getHTML( tpl_vars ){
+		return getHTML( tpl_vars )
+	}
+
+	getCSS(){
+		return style
 	}
 
 	isRegistered(){

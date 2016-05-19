@@ -3,7 +3,7 @@ import jQuery from 'jquery'
 
 let $ = jQuery
 
-import getTemplate from './remote-controller.jade'
+import getHTML from './remote-controller.jade'
 
 let prettyJSON = data => JSON.stringify( data, null, 4 )
 
@@ -14,7 +14,7 @@ let prettyJSON = data => JSON.stringify( data, null, 4 )
 class RemoteControllerClass extends RemoteItemClass {
 	constructor(){ super() }
 
-	// static getTemplate = getTemplate
+	// static getHTML = getHTML
 
     render( data ){
 		var tpl_vars,
@@ -26,8 +26,8 @@ class RemoteControllerClass extends RemoteItemClass {
 			$el = $( this.template )
 				
 			let items = data.map( item => {
-				let str = JSON.stringify( item, null, 4 ),
-					$tmp = $('<pre>'+str+'</pre>')
+				let str = JSON.stringify( item ),
+					$tmp = $('<x-projection data='+str+'></x-projection>')
 				// let $tmp = $(`<remote-item resource="${ this.remote.endpoint }" id="${ item.id }" actions="*"><em>"${ item.id }"</em></remote-item>`)
 				$tmp.on('action', evt => { console.log('action'); console.dir( evt ) })
 				return $tmp
@@ -45,8 +45,8 @@ class RemoteControllerClass extends RemoteItemClass {
     	// this.innerHTML = this.template.html()
     }
 
-	getTemplate( ...args ){
-		return getTemplate( ...args )
+	getHTML( ...args ){
+		return getHTML( ...args )
 	}
 
     read(){
@@ -63,7 +63,7 @@ class RemoteControllerClass extends RemoteItemClass {
 						this.render( data )
 					} else {
 						let flash = document.createDocumentFragment(),
-							err = document.createElement('x-flash')
+							err = document.createElement('u-flash')
 						err.setAttribute('duration', 10*1000 )
 						err.setAttribute('error', true )
 						err.innerHTML = prettyJSON( data )
@@ -83,27 +83,6 @@ class RemoteControllerClass extends RemoteItemClass {
 
     // create(){}
 }
-// var RemoteControllerElem = document.registerElement('remote-controller', RemoteControllerClass )
 
-
-
-// function getResourceStringFromTemplate( $tpl ){
-// 	var $buh = $( $tpl ).filter(function(){
-// 	    return $( this ).attr('resource')
-// 	}).first()
-
-// 	return $buh.attr('resource')
-// }
-
-// function getIdFromTemplate( $tpl ){
-
-//   var $html = $( $( $tpl ).html() )
-
-//   var $buh = $html.filter(function(){
-//     return $( this ).attr('id')
-//   }).first()
-
-//   return $buh.attr('id') || ''
-// }
 
 export default RemoteControllerClass
