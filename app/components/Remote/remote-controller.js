@@ -27,7 +27,7 @@ class RemoteControllerClass extends RemoteItemClass {
 				
 			let items = data.map( item => {
 				let str = JSON.stringify( item ),
-					$tmp = $('<x-projection data='+str+'></x-projection>')
+					$tmp = $('<x-projection data=\''+str+'\'></x-projection>')
 				// let $tmp = $(`<remote-item resource="${ this.remote.endpoint }" id="${ item.id }" actions="*"><em>"${ item.id }"</em></remote-item>`)
 				$tmp.on('action', evt => { console.log('action'); console.dir( evt ) })
 				return $tmp

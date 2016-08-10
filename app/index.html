@@ -41,11 +41,14 @@
 	<hr>
 
 	<h3>&lt;x-projection&gt;</h3>
-	<x-projection data='{"name": "d", "age": "3", "category": {"left": "wed", "right": "wef"}, "osdfghe": "eate4t" }'><style>x-projection .age { color: purple; }</style></x-projection>
+	<x-projection data='{"name": "d", "age": "3", "category": {"left": "wed ref qwewred", "right": "wef"}, "osdfghe": "eate4t" }'><style>x-projection .age { color: purple; }</style></x-projection>
 
 	<hr>
 
 	<h3>&lt;remote-*&gt;</h3>
+	<remote-controller resource="localhost:3000/things" actions="read" class="sandbox">
+		<h4 class="blink">Prease waiting...</h4>
+	</remote-controller>
 	<remote-controller resource="ec2-52-35-23-159.us-west-2.compute.amazonaws.com/trackers" actions="*" class="sandbox">
 		<h4 class="blink">Prease waiting...</h4>
 	</remote-controller>

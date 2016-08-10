@@ -24,10 +24,16 @@ class ProjectionElement extends BaseElement {
         let d = document.createDocumentFragment()
         
         var data = data
-        console.dir( data )
-        try { data = JSON.parse( data ) } catch( e ){ console.log('oops, '+e) }
 
         let type = typeof data
+        console.log('Data:')
+        if( type == 'string' || type == 'number') console.log( data )
+        else console.dir( data )
+        console.log( type )
+
+        try { data = JSON.parse( data ) } catch( e ){ console.log('%c Oops, '+e, 'color: orange;') }
+
+        type = typeof data
         console.log( type )
 
         let listItem = ( data, i ) => {
